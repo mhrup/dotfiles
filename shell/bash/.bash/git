@@ -1,0 +1,11 @@
+#!/bin/bash
+
+__my_git_dir() {
+	git rev-parse --show-toplevel
+} 2>/dev/null
+
+__my_git_branch() {
+	git symbolic-ref --short HEAD ||
+	{ __my_git_dir >/dev/null && printf "*"; }
+} 2>/dev/null
+

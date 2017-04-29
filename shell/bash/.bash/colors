@@ -1,0 +1,16 @@
+#!/bin/bash
+
+__my_color_fg() { printf "\[\e[38;5;%dm\]" $1; }
+__my_color_bg() { printf "\[\e[48;5;%dm\]" $1; }
+__MY_COLOR_RESET="\[\e[0m\]"
+
+__MY_FG_BLACK="$(__my_color_fg 0)"
+__MY_FG_RED="$(__my_color_fg 1)"
+__MY_FG_GREEN="$(__my_color_fg 2)"
+__MY_FG_YELLOW="$(__my_color_fg 3)"
+__MY_FG_BLUE="$(__my_color_fg 4)"
+__MY_FG_MAGENTA="$(__my_color_fg 5)"
+__MY_FG_CYAN="$(__my_color_fg 6)"
+__MY_FG_WHITE="$(__my_color_fg 7)"
+__MY_FG_DEFAULT="$(__my_color_fg 60)"
+

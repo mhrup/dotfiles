@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# exa: ls alternative
+type exa >/dev/null 2>&1 && {
+	alias ls='exa'
+	alias ll='exa -l --git --color-scale'
+	alias la='exa -la --git --color-scale'
+	alias lt='exa -lT --git --color-scale'
+} || {
+	alias ll='ls -l'
+	alias la='ls -la'
+}
+
+alias grep='grep --color=auto'
+alias egrep='grep -E --color=auto'
+

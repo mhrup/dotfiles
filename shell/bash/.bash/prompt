@@ -1,0 +1,42 @@
+#!/bin/bash
+
+__my_prompt() (
+	module() { printf "$__MY_FG_DEFAULT[$1$__MY_FG_DEFAULT]"; }
+
+	exit_status() {
+		test $__MY_EXIT_STATUS -ne 0 &&
+		module "$__MY_FG_RED$__MY_EXIT_STATUS" ||
+		module "$__MY_FG_GREEN$__MY_EXIT_STATUS"
+	}
+
+	working_dir() {
+		test -z "$__MY_GIT_DIR" &&
+		module "$__MY_FG_BLUE\w" ||
+		module "$__MY_FG_BLUE$(basename "$__MY_GIT_DIR")${PWD#$__MY_GIT_DIR}"
+	}
+
+	git_branch() {
+		test -n "$__MY_GIT_DIR" && {
+			GIT_STATUS="$(git status --porcelain)"
+
+			test -z "$GIT_STATUS" &&
+			module "$__MY_FG_GREEN$__MY_GIT_BRANCH" || {
+				test -z "$(echo "$GIT_STATUS" | grep -E "^[MADRCU]")" &&
+				module "$__MY_FG_RED$__MY_GIT_BRANCH" ||
+				module "$__MY_FG_YELLOW$__MY_GIT_BRANCH"
+			}
+		}
+	}
+
+	prompt() {
+		printf "$__MY_FG_DEFAULT"
+		test $(id -u) -eq 0 &&
+		printf "# " ||
+		printf "$ "
+
+		printf "$__MY_COLOR_RESET"
+	}
+
+	printf " $(exit_status)$(working_dir)$(git_branch)\n"
+	printf "$(prompt)"
+)
